@@ -10,7 +10,7 @@ const kmtom = kilom => kilom * 1.60934
 
 const home = os.homedir()
 
-let natdas = { zipcode: '72212', miles: 10 }
+let natdas = { zipcode: '72212', miles: 10, minmag: 1.0 }
 
 const saveConfig = natdasData => {
   fs.writeFile(pathFor(home, '.natdas.json'), JS(natdasData), err => {
@@ -46,6 +46,7 @@ app.get('/', (req, res) => {
 app.post('/', bodyParser.urlencoded({ extended: false }), (req, res) => {
   natdas.zipcode = req.body.zipcode
   natdas.miles = parseInt(req.body.miles, 10)
+  natdas.minmag = req.body.minmag
   saveConfig(natdas)
   res.render('pages/index', { config: natdas })
 })
@@ -60,7 +61,7 @@ setInterval(_ => {
 
       notifier.notify({
         title: firstFinding.place,
-        message: 'Yellow alert!'
+        message: `${firstFinding.mag} magintude, Yellow Alert!`
       })
 
     })
