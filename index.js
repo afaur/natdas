@@ -52,7 +52,7 @@ app.post('/', bodyParser.urlencoded({ extended: false }), (req, res) => {
 })
 
 setInterval(_ => {
-  https.get(`https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02&latitude=45.518333&longitude=-122.677261&maxradiuskm=${mtokm(natdas.miles)}`, resp => {
+  https.get(`https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&minmagnitude=${natdas.minmag}&latitude=45.518333&longitude=-122.677261&maxradiuskm=${mtokm(natdas.miles)}`, resp => {
     let data = ''
 
     resp.on('data', chunk => { data += chunk })
